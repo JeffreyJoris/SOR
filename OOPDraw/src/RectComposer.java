@@ -1,5 +1,5 @@
-import java.awt.Color;
-import java.awt.Graphics2D;
+
+import java.awt.Point;
 
 /**
  * 
@@ -9,17 +9,36 @@ import java.awt.Graphics2D;
  * @author jeffr_000
  *
  */
-public class RectComposer extends AdvancedShapeComposer {
-	
-	public RectComposer(){
-		colour = Color.BLACK;
-	}
+public class RectComposer extends ShapeComposer {
+	private MyRect rect;
 
 	@Override
-	public void Draw(Graphics2D g) {
-		g.setColor(colour);
-		g.drawRect(startPosition.x,startPosition. y, width, height);
+	public AbstractShape create(Point coordinates) {
+		rect = new MyRect();
+		rect.setStart(coordinates);
+		return rect;
+				
+	}
+
+	/* (non-Javadoc)
+	 * @see AdvancedShapeComposer#complete(java.awt.Point)
+	 */
+	@Override
+	public void complete(Point coordinates) {
+		expand(coordinates);
 
 	}
 
+	/* (non-Javadoc)
+	 * @see AdvancedShapeComposer#expand(java.awt.Point)
+	 */
+	@Override
+	public void expand(Point coordinates) {
+		Point ptEnd = new Point(Math.max(coordinates.x, rect.getStart().x), Math.max(coordinates.y, rect.getStart().y));
+		 Point newstart = new Point(Math.min(coordinates.x, rect.getStart().x), Math.min(coordinates.y,
+				 rect.getStart().y));
+		rect.setWidth(Math.abs((ptEnd.x - newstart.x)));
+		rect.setHeight(Math.abs((ptEnd.y - newstart.y)));
+		rect.setDynStart(newstart);
+	}
 }

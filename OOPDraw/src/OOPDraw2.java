@@ -81,7 +81,7 @@ public class OOPDraw2 extends JFrame implements MouseListener,
 	private ShapeComposer currentComposer;
 
 	// ArrayList for storing the shapes
-	private ArrayList<ShapeComposer> objectsOnScreen;
+	private ArrayList<AbstractShape> shapeList;
 
 	
 
@@ -93,7 +93,7 @@ public class OOPDraw2 extends JFrame implements MouseListener,
 
 	private OOPDraw2() {
 		// Do nothing in constructor off applet
-		objectsOnScreen = new ArrayList<ShapeComposer>();
+		shapeList= new ArrayList<AbstractShape>();
 		currentComposer = new LineComposer();
 		initGUI();
 	}
@@ -127,7 +127,7 @@ public class OOPDraw2 extends JFrame implements MouseListener,
 		int x = e.getX();
 		int y = e.getY();
 		Point coordinates =  new Point(x,y);
-		objectsOnScreen.add(currentComposer.create(coordinates));
+		shapeList.add(currentComposer.create(coordinates));
 	}
 
 	@Override
@@ -180,7 +180,7 @@ public class OOPDraw2 extends JFrame implements MouseListener,
 		g.fillRect(0, 0, getSize().width, getSize().height);
 		g.setColor(new Color(255, 255, 154));
 		g.fillRect(1, 1, getSize().width - 3, getSize().height - 3);
-		for (ShapeComposer shape : objectsOnScreen) {
+		for (AbstractShape shape : shapeList) {
 			shape.Draw((Graphics2D)g);
 
 		}
@@ -191,7 +191,7 @@ public class OOPDraw2 extends JFrame implements MouseListener,
 	 */
 	private void initGUI() {
 		setSize(800, 600);
-		setTitle("jeffs awesome draw tool thingy");
+		setTitle("jeffs awesome draw tool thingy mahjigger");
 		setLayout(new FlowLayout());
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
@@ -227,7 +227,7 @@ public class OOPDraw2 extends JFrame implements MouseListener,
 			public void actionPerformed(ActionEvent arg0) {
 				// Clear the entire drawing screen
 				// First remove all elements
-				objectsOnScreen.clear();
+				shapeList.clear();
 				// then make vector index zero
 				// finally, call repaint()
 				repaint();

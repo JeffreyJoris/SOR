@@ -1,5 +1,5 @@
-import java.awt.Color;
-import java.awt.Graphics2D;
+
+import java.awt.Point;
 
 
 /**
@@ -10,17 +10,32 @@ import java.awt.Graphics2D;
  * @author jeffr_000
  *
  */
-public class OvalComposer extends AdvancedShapeComposer {
-	
-	public OvalComposer(){
-		colour = Color.BLACK;
-	}
+public class OvalComposer extends ShapeComposer {
+	private MyOval oval;
 
 	@Override
-	public void Draw(Graphics2D g) {
-		g.setColor(colour);
-		g.drawOval(startPosition.x,startPosition. y, width, height);
+	public AbstractShape create(Point coordinates) {
+		oval = new MyOval();
+		oval.setStart(coordinates);
+		return oval;
+				
+	}
 
+	/* (non-Javadoc)
+	 * @see AdvancedShapeComposer#complete(java.awt.Point)
+	 */
+	@Override
+	public void complete(Point coordinates) {
+		expand(coordinates);
+
+	}
+
+	/* (non-Javadoc)
+	 * @see AdvancedShapeComposer#expand(java.awt.Point)
+	 */
+	@Override
+	public void expand(Point coordinates) {
+		oval.setEnd(coordinates);
 	}
 
 }

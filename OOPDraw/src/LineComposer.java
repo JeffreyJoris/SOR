@@ -1,19 +1,16 @@
-import java.awt.Color;
-import java.awt.Graphics2D;
+
 import java.awt.Point;
 
 
 public class LineComposer extends ShapeComposer {
+	private MyLine line;
 	
-	public LineComposer(){
-		colour = Color.RED;
-	}
 
 	@Override
-	public ShapeComposer create(Point coordinates) {
-		startPosition = coordinates;
-		endPosition = coordinates;
-		return this;
+	public AbstractShape create(Point coordinates) {
+		line = new MyLine();
+		line.setStart(coordinates);
+		return line;
 	}
 
 	@Override
@@ -24,11 +21,7 @@ public class LineComposer extends ShapeComposer {
 
 	@Override
 	public void expand(Point coordinates) {
-		endPosition = coordinates;
-	}
-	public void Draw(Graphics2D g){
-		g.setColor(colour);
-		g.drawLine(startPosition.x,startPosition.y,endPosition.x,endPosition.y);
+		line.setEnd(coordinates);
 	}
 
 }
