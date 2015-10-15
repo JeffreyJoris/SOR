@@ -79,11 +79,8 @@ public class OOPDraw2 extends JFrame implements MouseListener,
 
 	private static OOPDraw2 _instance;
 	private ShapeComposer currentComposer;
-
 	// ArrayList for storing the shapes
 	private ArrayList<AbstractShape> shapeList;
-
-	
 
 	public static void main(String[] args) {
 		OOPDraw2 frame = new OOPDraw2();
@@ -93,7 +90,7 @@ public class OOPDraw2 extends JFrame implements MouseListener,
 
 	private OOPDraw2() {
 		// Do nothing in constructor off applet
-		shapeList= new ArrayList<AbstractShape>();
+		shapeList = new ArrayList<AbstractShape>();
 		currentComposer = new LineComposer();
 		initGUI();
 	}
@@ -126,7 +123,7 @@ public class OOPDraw2 extends JFrame implements MouseListener,
 		// position of the shape to be drawn
 		int x = e.getX();
 		int y = e.getY();
-		Point coordinates =  new Point(x,y);
+		Point coordinates = new Point(x, y);
 		shapeList.add(currentComposer.create(coordinates));
 	}
 
@@ -137,7 +134,7 @@ public class OOPDraw2 extends JFrame implements MouseListener,
 		// Then update the Vector count.
 		int x = e.getX();
 		int y = e.getY();
-		Point coordinates = new Point(x,y);
+		Point coordinates = new Point(x, y);
 		currentComposer.complete(coordinates);
 		repaint();
 	}
@@ -157,9 +154,9 @@ public class OOPDraw2 extends JFrame implements MouseListener,
 		// current endpoint
 		int x = e.getX();
 		int y = e.getY();
-		Point coordinates = new Point(x,y);
+		Point coordinates = new Point(x, y);
 		currentComposer.expand(coordinates);
-		
+
 		repaint();
 	}
 
@@ -181,7 +178,7 @@ public class OOPDraw2 extends JFrame implements MouseListener,
 		g.setColor(new Color(255, 255, 154));
 		g.fillRect(1, 1, getSize().width - 3, getSize().height - 3);
 		for (AbstractShape shape : shapeList) {
-			shape.Draw((Graphics2D)g);
+			shape.Draw((Graphics2D) g);
 
 		}
 	}
@@ -195,31 +192,20 @@ public class OOPDraw2 extends JFrame implements MouseListener,
 		setLayout(new FlowLayout());
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
+		ShapeComposerFactory factory = ShapeComposerFactory.getInstance();
 		// Create and Add the buttons
-		Button btnLine = new Button("Line");
-		btnLine.addActionListener(new ActionListener() {
+		for (String name : factory.listComposerNames()) {
+			Button button = new Button(name);
+			final ShapeComposer newComposer = factory.createComposer(name);
+			button.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					currentComposer = newComposer;
+				}
+			});
+			add(button);
+		}
+		// ...
 
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				currentComposer = new LineComposer();
-			}
-		});
-		Button btnOval = new Button("Oval");
-		btnOval.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				currentComposer = new OvalComposer();
-			}
-		});
-		Button btnRect = new Button("Rectangle");
-		btnRect.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				currentComposer = new RectComposer();
-			}
-		});
 		Button btnClear = new Button("Clear");
 		btnClear.addActionListener(new ActionListener() {
 
@@ -233,9 +219,7 @@ public class OOPDraw2 extends JFrame implements MouseListener,
 				repaint();
 			}
 		});
-		add(btnLine);
-		add(btnOval);
-		add(btnRect);
+
 		add(btnClear);
 	}
 

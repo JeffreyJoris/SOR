@@ -10,6 +10,10 @@ class MyOval extends AbstractShape {
 
 	private Point dynStart;
 	private Ellipse2D oval;
+	
+	public MyOval() {
+		oval = new Ellipse2D.Double();
+	}
 
 	public void setStart(Point pt) {
 		oval.setFrame(pt.x, pt.y, (oval.getX() - pt.x), (oval.getY() - pt.y));

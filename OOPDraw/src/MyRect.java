@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.geom.Rectangle2D;
 
 // Class cRect for drawing Rects is derived
 // from our 'base class' cShape
@@ -8,43 +9,25 @@ import java.awt.Point;
 class MyRect extends AbstractShape {
 
 	private Point dynStart;
+	private Rectangle2D rect;
+
+	public MyRect() {
+		rect = new Rectangle2D.Double();
+	}
 
 	public void setStart(Point pt) {
-		ptStart = pt;
+		rect.setFrame(pt.x, pt.y,0,0);
+		dynStart = pt;
 	}
 
 	public void setEnd(Point pt) {
-		ptEnd = pt;
-	}
-
-	public void setWidth(int w) {
-		nwidth = w;
-	}
-
-	public void setHeight(int h) {
-		nheight = h;
-	}
-
-	public Point getStart() {
-		return ptStart;
-	}
-
-	public Point getEnd() {
-		return new Point(0, 0);
-	}
-
-	public int getWidth() {
-		return nwidth;
-	}
-
-	public int getHeight() {
-		return nheight;
+		rect.setFrameFromDiagonal(dynStart, pt);
 	}
 
 	// Drawing routine
 	public void Draw(Graphics2D g) {
 		g.setColor(Color.blue.brighter()); // Set default color
-		g.drawRect(dynStart.x, dynStart.y, nwidth, nheight);
+		g.draw(rect);
 	}
 
 	public void setDynStart(Point newstart) {

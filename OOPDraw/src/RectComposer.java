@@ -1,4 +1,3 @@
-
 import java.awt.Point;
 
 /**
@@ -34,11 +33,6 @@ public class RectComposer extends ShapeComposer {
 	 */
 	@Override
 	public void expand(Point coordinates) {
-		Point ptEnd = new Point(Math.max(coordinates.x, rect.getStart().x), Math.max(coordinates.y, rect.getStart().y));
-		 Point newstart = new Point(Math.min(coordinates.x, rect.getStart().x), Math.min(coordinates.y,
-				 rect.getStart().y));
-		rect.setWidth(Math.abs((ptEnd.x - newstart.x)));
-		rect.setHeight(Math.abs((ptEnd.y - newstart.y)));
-		rect.setDynStart(newstart);
+		rect.setEnd(coordinates);
 	}
 }
